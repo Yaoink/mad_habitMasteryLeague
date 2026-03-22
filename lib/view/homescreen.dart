@@ -42,15 +42,31 @@ class _HomeScreenState extends State<HomeScreen> {
           return ListTile(
             title: Text(habit.name),
             subtitle: Text(habit.description),
-            trailing: Text('Streak: ${habit.streak}'),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('Streak: ${habit.streak}'),
 
-            onTap: () async {
-              await Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => EditHabit(habit: habit)),
-              );
-              await _loadHabits();
-            },
+                IconButton(
+                  icon: const Icon(Icons.edit),
+                  onPressed: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => EditHabit(habit: habit)),
+                    );
+                    await _loadHabits(); // Refresh habits after editing
+                  },
+                ),
+
+                IconButton(
+                  icon: const Icon(Icons.delete),
+                  onPressed: () async {
+                    await DatabaseHelper.instance.deleteItem(habit.id!);
+                    await _loadHabits(); // Refresh habits after deletion
+                  },
+                ),
+              ],
+            ),
           );
         },
       ),
