@@ -3,6 +3,7 @@ import 'package:project1/model/database_helper.dart';
 import 'package:project1/model/habit_model.dart';
 import 'package:project1/view/add_habit.dart';
 import 'package:project1/view/edit_habit.dart';
+import 'Package:project1/view/habit_deets.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -42,6 +43,20 @@ class _HomeScreenState extends State<HomeScreen> {
           return ListTile(
             title: Text(habit.name),
             subtitle: Text(habit.description),
+            onTap: () async { //navigates to screen that displays full details of habit
+              final dbHabit = await DatabaseHelper.instance.getItem(habit.id!);
+
+              if (dbHabit == null) return;
+
+              final fullHabit = HabitModel.fromMap(dbHabit);
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HabitDeets(habit: fullHabit),
+                ),
+              );
+            },
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
