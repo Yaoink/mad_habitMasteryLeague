@@ -63,11 +63,26 @@ class _EditHabitState extends State<EditHabit> {
       appBar: AppBar(title: const Text('Edit Habit')),
       body: Column(
         children: [
-          TextField(controller: habitNameController),
-          TextField(controller: descriptionController),
-          TextField(controller: rewardController),
-          TextField(controller: penaltyController),
-          TextField(controller: frequencyController),
+          TextField(
+            controller: habitNameController,
+            decoration: const InputDecoration(labelText: 'Habit Name'),
+          ),
+          TextField(
+            controller: descriptionController,
+            decoration: const InputDecoration(labelText: 'Description'),
+          ),
+          TextField(
+            controller: rewardController,
+            decoration: const InputDecoration(labelText: 'Reward Requirement'),
+          ),
+          TextField(
+            controller: penaltyController,
+            decoration: const InputDecoration(labelText: 'Penalty Requirement'),
+          ),
+          TextField(
+            controller: frequencyController,
+            decoration: const InputDecoration(labelText: 'Frequency'),
+          ),
 
           ElevatedButton(
             onPressed: updateHabit,
