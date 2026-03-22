@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project1/model/database_helper.dart';
 import 'package:project1/model/habit_model.dart';
 import 'package:project1/view/add_habit.dart';
+import 'package:project1/view/edit_habit.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -42,6 +43,14 @@ class _HomeScreenState extends State<HomeScreen> {
             title: Text(habit.name),
             subtitle: Text(habit.description),
             trailing: Text('Streak: ${habit.streak}'),
+
+            onTap: () async {
+              await Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => EditHabit(habit: habit)),
+              );
+              await _loadHabits();
+            },
           );
         },
       ),
