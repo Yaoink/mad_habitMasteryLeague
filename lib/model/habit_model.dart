@@ -42,5 +42,9 @@ class HabitModel {
       streak: map['streak'],
     );
   }
+  @override
+  String toString() {
+    return 'HabitModel{id: $id, name: $name, description: $description, rewardReq: $rewardReq, penaltyReq: $penaltyReq, frequency: $frequency, streak: $streak}';
+  }
 }
 
