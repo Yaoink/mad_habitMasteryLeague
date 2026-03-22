@@ -25,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       habits = habitMaps.map((map) => HabitModel.fromMap(map)).toList();
     });
+    print("Loaded habits: $habits");
   }
 
   @override
@@ -46,14 +47,16 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
 
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
+        onPressed: () async{
+          await Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const AddHabit()),
-          ).then((_) => _loadHabits()); // Refresh habits after adding new one
+          );
+          await _loadHabits(); // Refresh habits after adding new one
         },
+
         child: const Icon(Icons.add),
-      ),
+      )
     );
   }
 }

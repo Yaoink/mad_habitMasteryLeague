@@ -33,11 +33,14 @@ class DatabaseHelper {
   // Create database tables
   Future _createDB(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE items (
+      CREATE TABLE habits (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT NOT NULL,
+        name TEXT NOT NULL,
         description TEXT,
-        created_at TEXT NOT NULL
+        rewardReq TEXT,
+        penaltyReq TEXT,
+        frequency TEXT,
+        streak INTEGER DEFAULT 0
       )
     ''');
   }
@@ -45,20 +48,20 @@ class DatabaseHelper {
   // CREATE - Insert new item
   Future<int> createItem(Map<String, dynamic> item) async {
     final db = await database;
-    return await db.insert('items', item);
+    return await db.insert('habits', item);
   }
   
   // READ - Get all items
   Future<List<Map<String, dynamic>>> getAllItems() async {
     final db = await database;
-    return await db.query('items', orderBy: 'created_at DESC');
+    return await db.query('habits', orderBy: 'name ASC');
   }
   
   // READ - Get single item by ID
   Future<Map<String, dynamic>?> getItem(int id) async {
     final db = await database;
     final results = await db.query(
-      'items',
+      'habits',
       where: 'id = ?',
       whereArgs: [id],
     );
@@ -69,7 +72,7 @@ class DatabaseHelper {
   Future<int> updateItem(int id, Map<String, dynamic> item) async {
     final db = await database;
     return await db.update(
-      'items',
+      'habits',
       item,
       where: 'id = ?',
       whereArgs: [id],
@@ -80,7 +83,7 @@ class DatabaseHelper {
   Future<int> deleteItem(int id) async {
     final db = await database;
     return await db.delete(
-      'items',
+      'habits',
       where: 'id = ?',
       whereArgs: [id],
     );

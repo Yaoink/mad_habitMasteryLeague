@@ -31,16 +31,14 @@ class _AddHabitState extends State<AddHabit> {
   final habit = {
     'name': habitNameController.text,
     'description': descriptionController.text,
-    'reward': rewardController.text,
-    'penalty': penaltyController.text,
+    'rewardReq': rewardController.text,
+    'penaltyReq': penaltyController.text,
     'frequency': frequencyController.text,
   };
 
   await DatabaseHelper.instance.createItem(habit);
 
-  print("Habit saved!");
-
-  Navigator.pop(context); // go back after saving
+  Navigator.pop(context);
 }
 
   @override
