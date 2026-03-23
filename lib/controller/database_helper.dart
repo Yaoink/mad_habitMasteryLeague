@@ -25,7 +25,7 @@ class DatabaseHelper {
     
     return await openDatabase(
       path,
-      version: 2,
+      version: 1,
       onCreate: _createDB,
     );
   }
@@ -40,8 +40,8 @@ class DatabaseHelper {
         rewardReq TEXT,
         penaltyReq TEXT,
         frequency TEXT,
-        streak INTEGER DEFAULT 0
-        lastCompleted DATE,
+        streak INTEGER DEFAULT 0,
+        lastCompleted TEXT
       )
     ''');
   }
