@@ -67,10 +67,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 IconButton(
                   icon: const Icon(Icons.check),
                   onPressed: () async {
-                    habit.streak = streakController.calculateStreak(habit);
+                    final newStreak = streakController.calculateStreak(habit);
+
+                    habit.streak = newStreak;
                     habit.lastCompleted = DateTime.now();
+
                     await DatabaseHelper.instance.updateItem(habit.id!, habit.toMap());
                     await _loadHabits();
+
+                    print("OLD: ${habit.streak}, NEW: $newStreak");
                   },
                 ),
                 IconButton(
