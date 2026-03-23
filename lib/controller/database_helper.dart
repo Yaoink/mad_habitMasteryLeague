@@ -41,6 +41,7 @@ class DatabaseHelper {
         penaltyReq TEXT,
         frequency TEXT,
         streak INTEGER DEFAULT 0
+        lastCompleted DATE,
       )
     ''');
   }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project1/model/database_helper.dart';
+import 'package:project1/controller/database_helper.dart';
 import 'package:project1/model/habit_model.dart';
 import 'package:project1/view/add_habit.dart';
 import 'package:project1/view/edit_habit.dart';
@@ -95,7 +95,12 @@ class _HomeScreenState extends State<HomeScreen> {
           await _loadHabits(); // Refresh habits after adding new one
         },
 
-        child: const Icon(Icons.add),
+        child: Row(
+          children: [
+            Icon(Icons.add),
+            Text('Add New Habit'),
+          ],
+        ),
       )
     );
   }

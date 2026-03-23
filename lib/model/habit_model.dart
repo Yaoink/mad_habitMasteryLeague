@@ -6,6 +6,7 @@ class HabitModel {
   String penaltyReq;
   String frequency;
   int streak;
+  DateTime? lastCompleted;
 
   HabitModel({
     this.id,
@@ -15,6 +16,7 @@ class HabitModel {
     required this.penaltyReq,
     required this.frequency,
     this.streak = 0,
+    this.lastCompleted
   });
 
   // Convert HabitModel to Map for database storage
@@ -27,6 +29,7 @@ class HabitModel {
       'penaltyReq': penaltyReq,
       'frequency': frequency,
       'streak': streak,
+      'lastCompleted': lastCompleted?.toIso8601String(),
     };
   }
 
@@ -40,11 +43,12 @@ class HabitModel {
       penaltyReq: map['penaltyReq'],
       frequency: map['frequency'],
       streak: map['streak'],
+      lastCompleted: map['lastCompleted'],
     );
   }
   @override
   String toString() {
-    return 'HabitModel{id: $id, name: $name, description: $description, rewardReq: $rewardReq, penaltyReq: $penaltyReq, frequency: $frequency, streak: $streak}';
+    return 'HabitModel{id: $id, name: $name, description: $description, rewardReq: $rewardReq, penaltyReq: $penaltyReq, frequency: $frequency, streak: $streak}, lastCompleted: $lastCompleted}';
   }
 }
 
