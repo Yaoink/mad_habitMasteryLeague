@@ -43,7 +43,7 @@ class HabitModel {
       penaltyReq: map['penaltyReq'],
       frequency: map['frequency'],
       streak: map['streak'],
-      lastCompleted: map['lastCompleted'],
+      lastCompleted: map['lastCompleted'] != null ? DateTime.parse(map['lastCompleted']) : null,
     );
   }
   @override

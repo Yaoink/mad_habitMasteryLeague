@@ -1,12 +1,17 @@
+import '../model/habit_model.dart';
+
 class StreakController {
   int streak = 0;
   DateTime? lastCompleted;
 
-  int calculateStreak(String frequency) {
+  int calculateStreak(HabitModel habit) {
     final now = DateTime.now();
-    final difference = lastCompleted != null ? now.difference(lastCompleted!) : null;
+    final today = DateTime(now.year, now.month, now.day);
+    final last = DateTime(habit.lastCompleted!.year, habit.lastCompleted!.month, habit.lastCompleted!.day);
 
-    switch (frequency) {
+    final difference = habit.lastCompleted != null ? today.difference(last) : null;
+
+    switch (habit.frequency) {
       case 'daily':
         if (difference != null && difference.inDays == 1) {
           streak++;

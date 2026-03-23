@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:project1/controller/database_helper.dart';
-import 'package:project1/model/habit_model.dart';
-import 'package:project1/view/add_habit.dart';
-import 'package:project1/view/edit_habit.dart';
-import 'Package:project1/view/habit_deets.dart';
+import '../controller/database_helper.dart';
+import '../model/habit_model.dart';
+import './add_habit.dart';
+import './edit_habit.dart';
+import './habit_deets.dart';
+import '../controller/streak.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,6 +15,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<HabitModel> habits = [];
+  StreakController streakController = StreakController();
 
   @override
   void initState() {
@@ -61,7 +63,16 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text('Streak: ${habit.streak}'),
-
+                //updates streak count and last completed date when check button is pressed
+                IconButton(
+                  icon: const Icon(Icons.check),
+                  onPressed: () async {
+                    habit.streak = streakController.calculateStreak(habit);
+                    habit.lastCompleted = DateTime.now();
+                    await DatabaseHelper.instance.updateItem(habit.id!, habit.toMap());
+                    await _loadHabits();
+                  },
+                ),
                 IconButton(
                   icon: const Icon(Icons.edit),
                   onPressed: () async {
@@ -69,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       context,
                       MaterialPageRoute(builder: (context) => EditHabit(habit: habit)),
                     );
-                    await _loadHabits(); // Refresh habits after editing
+                    await _loadHabits();
                   },
                 ),
 
@@ -77,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: const Icon(Icons.delete),
                   onPressed: () async {
                     await DatabaseHelper.instance.deleteItem(habit.id!);
-                    await _loadHabits(); // Refresh habits after deletion
+                    await _loadHabits();
                   },
                 ),
               ],
