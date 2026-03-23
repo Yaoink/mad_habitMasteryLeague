@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:project1/model/database_helper.dart';
+import 'package:project1/controller/database_helper.dart';
 
 
 class AddHabit extends StatefulWidget {
